@@ -3,14 +3,16 @@
 <head>
   <meta charset="utf-8">
   <style>
-    html,body,form,fieldset,table,tr,td,img {
+    html, body, form, fieldset, table, tr, td, img {
       margin: 0;
       padding: 0;
       font: 100%/150% calibri, helvetica, sans-serif;
     }
-    td, td * { 
+
+    td, td * {
       max-height: 30px !important;
     }
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -19,23 +21,38 @@
     }
 
     #filters {
-      padding: 15px 25px;
       background-color: #ffffff;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      margin: 20px;
       border-radius: 8px;
       display: flex;
       justify-content: center;
       align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 20px 50px;
     }
 
-    label {
+    .filter-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      width: 100%;
+      max-width: 600px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .filter-wrapper label {
       font-size: 16px;
       font-weight: 600;
       color: #333;
+      flex: 1 1 100%;
+      text-align: center;
     }
 
-    select {
+    .filter-wrapper select {
+      flex: 1 1 100%;
+      min-width: 250px;
       font-size: 16px;
       padding: 10px 20px;
       border-radius: 8px;
@@ -46,28 +63,26 @@
       outline: none;
       cursor: pointer;
       transition: border-color 0.3s ease, background-color 0.3s ease;
+      min-width: 200px;
     }
 
-    select:hover {
+    .filter-wrapper select:hover {
       border-color: #5b9bd5;
     }
 
-    select:focus {
+    .filter-wrapper select:focus {
       border-color: #0078d4;
       background-color: #f0f8ff;
     }
 
-    select option {
+    .filter-wrapper select option {
       font-size: 16px;
       padding: 10px;
     }
 
-    #container {
-      height: 80%;
-    }
-
-    .apply-button {
-      display: inline-block;
+    .filter-wrapper .apply-button {
+      flex: 1 1 100%;
+      min-width: 150px;
       padding: 10px 20px;
       font-size: 16px;
       background-color: #0078d4;
@@ -75,16 +90,31 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      margin-left: 10px;
       transition: background-color 0.3s ease;
+      min-width: 100px;
     }
 
-    .apply-button:hover {
+    .filter-wrapper .apply-button:hover {
       background-color: #005a9e;
     }
 
-    .apply-button:focus {
+    .filter-wrapper .apply-button:focus {
       outline: none;
+    }
+
+    #container {
+      height: 80%;
+    }
+
+    @media (max-width: 600px) {
+      .filter-wrapper select,
+      .filter-wrapper .apply-button {
+        flex: 1 1 100%;
+      }
+
+      .filter-wrapper label {
+        text-align: left;
+      }
     }
   </style>
 </head>
@@ -105,6 +135,7 @@
       </tr>
     </tbody>
   </table>
+
   <div id="header">
     <h2 style="text-align:center;">Projeto de Visualização Interativa de Dados</h2>
     <h4 style="text-align:center;"><u>Grupo H</u>: Fernando Silva,  Johansson Santos,  Lucas Belmiro, Luis Ricarte&nbsp; &nbsp;</h4>
@@ -121,15 +152,18 @@
       <li><strong>Valor adicionado bruto a preços correntes dos serviços, exclusive administração, defesa, educação e saúde públicas e seguridade social:</strong> reflete o desempenho do comércio, atividades financeiras, transporte e outros serviços privados.</li>
       <li><strong>Valor adicionado bruto a preços correntes da administração, defesa, educação e saúde públicas e seguridade social:</strong> contabiliza o impacto dos serviços públicos na economia local.</li>
     </ul>
-    
   </div>
+
   <div id="container" style="max-width: 100%; height: 470px; padding: 10px 50px 10px 50px;"></div>
+
   <div id="filters">
-    <label for="select-variable">Selecione a variável: </label>
-    <select id="select-variable" onchange="updateChartData()">
-    </select>
-    <button class="apply-button" onclick="updateChartData()">Aplicar</button>
+    <div class="filter-wrapper">
+      <label for="select-variable">Selecione a variável:</label>
+      <select id="select-variable" onchange="updateChartData()"></select>
+      <button class="apply-button" onclick="updateChartData()">Aplicar</button>
+    </div>
   </div>
+
   <div id="footer" style="height: 2%">
     <p style="text-align:justify; padding: 20px 50px 0px 50px;"><b>Dicas para interagir com a visualização</b>:</p>
     <ul style="padding: 0px 50px 10px 75px;">
@@ -145,7 +179,6 @@
       </li>
     </ul>
   </div>
-
   <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
   <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 
